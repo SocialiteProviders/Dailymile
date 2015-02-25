@@ -12,7 +12,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://api.dailymile.com/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://api.dailymile.com/oauth/authorize', $state
+        );
     }
 
     /**
@@ -28,7 +30,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://api.dailymile.com/people/me.json?oauth_token='.$token);
+        $response = $this->getHttpClient()->get(
+            'https://api.dailymile.com/people/me.json?oauth_token='.$token
+        );
 
         return json_decode($response->getBody(), true);
     }
@@ -39,11 +43,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => null,
-            'nickname' => $user['username'],
-            'name'     => $user['display_name'],
-            'email'    => null,
-            'avatar'   => $user['photo_url'],
+            'id' => null, 'nickname' => $user['username'],
+            'name' => $user['display_name'], 'email' => null,
+            'avatar' => $user['photo_url'],
         ]);
     }
 
@@ -52,6 +54,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 }
