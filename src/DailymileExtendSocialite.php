@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Dailymile;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
